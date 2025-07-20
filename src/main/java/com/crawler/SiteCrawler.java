@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.jsoup.*;
 import org.jsoup.nodes.*;
@@ -31,26 +32,34 @@ public class SiteCrawler {
     }
 
     private void downloadFiles(Elements links) {
-        ExecutorService service = Executors.newFixedThreadPool(args.getMaxParallel());
-        reporter.increment(links.size());
-        for (Element link : links) {
-            service.submit(new Runnable() {
-                public void run() {
-                    String href = link.attr("href");
-                    String identifier = getLinkIdentifier(href);
-                    try {
-                        downloadFile(href, args.getLocation() + identifier);
-                    } catch (Exception e) {
-                        System.out.println("error: download failed: " + e.getMessage());
-                    } finally {
-                        reporter.decrement();
-                        if (reporter.getPending() == 0) {
-                            System.out.println("\nDone!");
-                            service.shutdown();
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            reporter.increment(links.size());
+            for (Element link : links) {
+                executor.submit(new Runnable() {
+                    public void run() {
+                        String href = link.attr("href");
+                        String identifier = getLinkIdentifier(href);
+                        try {
+                            downloadFile(href, args.getLocation() + identifier);
+                        } catch (Exception e) {
+                            System.out.println(" :: error: download failed: " + e.getMessage());
+                        } finally {
+                            reporter.decrement();
+                            if (reporter.getPending() == 0) {
+                                System.out.println("\nDone!");
+                                executor.shutdown();
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+
+            try {
+                executor.shutdown();
+                executor.awaitTermination(1, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 
@@ -69,6 +78,11 @@ public class SiteCrawler {
     private long downloadFile(String link, String filename) throws IOException {
         var url = URI.create(link).toURL();
         try (InputStream in = url.openStream()) {
+            File file = new File(filename);
+            if (file.exists()) {
+                throw new Error("file already exists");
+            }
+
             return Files.copy(in, Paths.get(filename));
         }
     }
