@@ -1,29 +1,54 @@
 package com.crawler;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.stream.Stream;
+
 import com.crawler.crawlers.BaseCrawler;
 import com.crawler.crawlers.HDPPCrawler;
 import com.crawler.crawlers.MBTBCrawler;
 
 public class Crawler {
+    private static BaseCrawler crawlers[] = {
+            new MBTBCrawler(),
+            new HDPPCrawler(),
+    };
+
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.out.println("Usage: crawler <url>");
+            System.out.println("Usage: crawler.jar <url | file-path.txt>");
             System.exit(1);
         }
 
         String url = args[0];
+        if (url.startsWith("http")) {
+            processURL(url);
+            return;
+        }
+
+        Path jobFile = Paths.get(url);
+        if (!jobFile.toFile().exists()) {
+            System.err.printf("error: file %s does not exists\n", url);
+            System.exit(1);
+        }
+
+        try (Stream<String> lines = Files.lines(jobFile)) {
+            lines.forEach(line -> processURL(line.trim()));
+        } catch (Exception e) {
+            System.err.println("error: Failed to process jobs.txt file: " + e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    private static void processURL(String url) {
         var opts = new CrawlerOptions() {
             {
                 setPage(url);
                 setLocation("./downloads/");
                 setMaxParallel(6);
             }
-        };
-
-        BaseCrawler crawlers[] = {
-                new MBTBCrawler(opts),
-                new HDPPCrawler(opts),
         };
 
         Optional<BaseCrawler> crawler = getCrawler(url, crawlers);
@@ -33,7 +58,7 @@ public class Crawler {
         }
 
         try {
-            crawler.get().crawl();
+            crawler.get().crawl(opts);
         } catch (Exception e) {
             System.out.printf("error: crawl failed: %s\n", e.getMessage());
         }

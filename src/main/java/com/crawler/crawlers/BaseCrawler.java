@@ -19,19 +19,17 @@ import org.jsoup.Jsoup;
 
 public abstract class BaseCrawler {
     protected ProgressReporter reporter;
-    protected final CrawlerOptions opts;
 
-    public BaseCrawler(CrawlerOptions crawleropts) {
-        opts = crawleropts;
+    public BaseCrawler() {
         reporter = new ProgressReporter();
     }
 
     public abstract boolean matchCrawler(String url);
 
-    public abstract void crawl() throws Exception;
+    public abstract void crawl(CrawlerOptions opts) throws Exception;
 
-    private void checkAndCreateDownloadsFolder() {
-        File theDir = new File(opts.getLocation());
+    private void checkAndCreateDownloadsFolder(String location) {
+        File theDir = new File(location);
         if (!theDir.exists()) {
             theDir.mkdirs();
         }
@@ -50,7 +48,7 @@ public abstract class BaseCrawler {
         }
     }
 
-    protected void downloadFiles(Elements links) {
+    protected void downloadFiles(CrawlerOptions opts, Elements links) {
         if (links.size() == 0) {
             System.out.println("No files found on page!");
             return;
@@ -88,8 +86,8 @@ public abstract class BaseCrawler {
         }
     }
 
-    protected Document getDocument() throws Exception {
-        checkAndCreateDownloadsFolder();
+    protected Document getDocument(CrawlerOptions opts) throws Exception {
+        checkAndCreateDownloadsFolder(opts.getLocation());
         System.out.println("Download page: " + opts.getPage());
         Document doc = Jsoup.connect(opts.getPage()).get();
         return doc;

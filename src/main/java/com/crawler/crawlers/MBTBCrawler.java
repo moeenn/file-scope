@@ -5,10 +5,6 @@ import org.jsoup.select.Elements;
 import com.crawler.CrawlerOptions;
 
 public class MBTBCrawler extends BaseCrawler {
-    public MBTBCrawler(CrawlerOptions crawleropts) {
-        super(crawleropts);
-    }
-
     @Override
     public boolean matchCrawler(String url) {
         String sites[] = {
@@ -27,9 +23,9 @@ public class MBTBCrawler extends BaseCrawler {
     }
 
     @Override
-    public void crawl() throws Exception {
-        Document doc = getDocument();
+    public void crawl(CrawlerOptions opts) throws Exception {
+        Document doc = getDocument(opts);
         Elements links = doc.select(".gallery-icon a");
-        downloadFiles(links);
+        downloadFiles(opts, links);
     }
 }
