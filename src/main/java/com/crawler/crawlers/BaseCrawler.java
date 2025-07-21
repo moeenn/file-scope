@@ -1,4 +1,4 @@
-package com.crawler;
+package com.crawler.crawlers;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,10 +10,11 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import com.crawler.CrawlerOptions;
+import com.crawler.ProgressReporter;
 import org.jsoup.Jsoup;
 
 public abstract class BaseCrawler {

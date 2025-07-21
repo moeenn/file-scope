@@ -1,5 +1,10 @@
 package com.crawler;
 
+import java.util.Optional;
+import com.crawler.crawlers.BaseCrawler;
+import com.crawler.crawlers.HDPPCrawler;
+import com.crawler.crawlers.MBTBCrawler;
+
 public class Crawler {
     public static void main(String[] args) {
         if (args.length < 1) {
@@ -18,24 +23,29 @@ public class Crawler {
 
         BaseCrawler crawlers[] = {
                 new MBTBCrawler(opts),
-                new EPPCrawler(opts),
+                new HDPPCrawler(opts),
         };
 
-        boolean isCrawled = false;
+        Optional<BaseCrawler> crawler = getCrawler(url, crawlers);
+        if (!crawler.isPresent()) {
+            System.err.println("error: the provided website is currently not supported");
+            System.exit(1);
+        }
+
+        try {
+            crawler.get().crawl();
+        } catch (Exception e) {
+            System.out.printf("error: crawl failed: %s\n", e.getMessage());
+        }
+    }
+
+    private static Optional<BaseCrawler> getCrawler(String url, BaseCrawler[] crawlers) {
         for (BaseCrawler crawler : crawlers) {
             if (crawler.matchCrawler(url)) {
-                isCrawled = true;
-                try {
-                    crawler.crawl();
-                } catch (Exception e) {
-                    System.out.printf("error: crawl failed: %s\n", e.getMessage());
-                }
-                break;
+                return Optional.ofNullable(crawler);
             }
         }
 
-        if (!isCrawled) {
-            System.err.println("error: the provided website is currently not supported");
-        }
+        return Optional.empty();
     }
 }

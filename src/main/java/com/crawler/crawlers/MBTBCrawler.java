@@ -1,7 +1,8 @@
-package com.crawler;
+package com.crawler.crawlers;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import com.crawler.CrawlerOptions;
 
 public class MBTBCrawler extends BaseCrawler {
     public MBTBCrawler(CrawlerOptions crawleropts) {
@@ -10,7 +11,19 @@ public class MBTBCrawler extends BaseCrawler {
 
     @Override
     public boolean matchCrawler(String url) {
-        return url.contains("mybigtitsbabes.com");
+        String sites[] = {
+                "mybigtitsbabes.com",
+                "epicpornpics.com",
+                "nudegirlsalert.com",
+        };
+
+        for (String site : sites) {
+            if (url.contains(site)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
