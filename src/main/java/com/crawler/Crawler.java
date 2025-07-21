@@ -12,14 +12,30 @@ public class Crawler {
             {
                 setPage(url);
                 setLocation("./downloads/");
+                setMaxParallel(6);
             }
         };
 
-        var crawler = new SiteCrawler(opts);
-        try {
-            crawler.crawl();
-        } catch (Exception e) {
-            System.out.printf("error: crawl failed: %s\n", e.getMessage());
+        BaseCrawler crawlers[] = {
+                new MBTBCrawler(opts),
+                new EPPCrawler(opts),
+        };
+
+        boolean isCrawled = false;
+        for (BaseCrawler crawler : crawlers) {
+            if (crawler.matchCrawler(url)) {
+                isCrawled = true;
+                try {
+                    crawler.crawl();
+                } catch (Exception e) {
+                    System.out.printf("error: crawl failed: %s\n", e.getMessage());
+                }
+                break;
+            }
+        }
+
+        if (!isCrawled) {
+            System.err.println("error: the provided website is currently not supported");
         }
     }
 }
