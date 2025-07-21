@@ -8,12 +8,14 @@ public class Crawler {
         }
 
         String url = args[0];
-        var builder = new CrawlerArgsBuilder()
-                .setLocation("./downloads/")
-                .setPage(url)
-                .setMaxParallel(6);
+        var opts = new CrawlerOptions() {
+            {
+                setPage(url);
+                setLocation("./downloads/");
+            }
+        };
 
-        var crawler = new SiteCrawler(builder.build());
+        var crawler = new SiteCrawler(opts);
         try {
             crawler.crawl();
         } catch (Exception e) {

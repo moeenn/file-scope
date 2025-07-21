@@ -1,14 +1,12 @@
 package com.crawler;
 
-public class CrawlerArgs {
+public class CrawlerOptions {
     private String page;
     private String location;
-    private int maxParallel;
 
-    public CrawlerArgs() {
+    public CrawlerOptions() {
         this.page = null;
         this.location = "./downloads/";
-        this.maxParallel = 6;
     }
 
     public String getPage() {
@@ -19,19 +17,11 @@ public class CrawlerArgs {
         return location;
     }
 
-    public int getMaxParallel() {
-        return maxParallel;
-    }
-
     public void setPage(String page) {
         this.page = page;
     }
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public void setMaxParallel(int maxParallel) {
-        this.maxParallel = maxParallel;
     }
 }

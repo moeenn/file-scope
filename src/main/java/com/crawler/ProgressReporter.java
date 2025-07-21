@@ -4,13 +4,8 @@ public class ProgressReporter {
     private int total = 0;
     private int count = 0;
 
-    public void increment() {
-        total++;
-        count = total;
-    }
-
-    public void increment(int n) {
-        total += n;
+    public void setTotal(int total) {
+        this.total = total;
         count = total;
     }
 

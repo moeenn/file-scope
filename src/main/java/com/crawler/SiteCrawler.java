@@ -16,31 +16,31 @@ import org.jsoup.select.Elements;
 
 public class SiteCrawler {
     private ProgressReporter reporter;
-    private final CrawlerArgs args;
+    private final CrawlerOptions opts;
 
-    public SiteCrawler(CrawlerArgs crawlerArgs) {
-        args = crawlerArgs;
+    public SiteCrawler(CrawlerOptions crawleropts) {
+        opts = crawleropts;
         reporter = new ProgressReporter();
     }
 
     public void crawl() throws Exception {
         checkAndCreateDownloadsFolder();
-        System.out.println("Download page: " + args.getPage());
-        Document doc = Jsoup.connect(args.getPage()).get();
+        System.out.println("Download page: " + opts.getPage());
+        Document doc = Jsoup.connect(opts.getPage()).get();
         Elements links = doc.select(".gallery-icon a");
         downloadFiles(links);
     }
 
     private void downloadFiles(Elements links) {
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
-            reporter.increment(links.size());
+            reporter.setTotal(links.size());
             for (Element link : links) {
                 executor.submit(new Runnable() {
                     public void run() {
                         String href = link.attr("href");
                         String identifier = getLinkIdentifier(href);
                         try {
-                            downloadFile(href, args.getLocation() + identifier);
+                            downloadFile(href, opts.getLocation() + identifier);
                         } catch (Exception e) {
                             System.out.println(" :: error: download failed: " + e.getMessage());
                         } finally {
@@ -69,7 +69,7 @@ public class SiteCrawler {
     }
 
     private void checkAndCreateDownloadsFolder() {
-        File theDir = new File(args.getLocation());
+        File theDir = new File(opts.getLocation());
         if (!theDir.exists()) {
             theDir.mkdirs();
         }
