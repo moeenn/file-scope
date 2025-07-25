@@ -61,7 +61,7 @@ public abstract class BaseCrawler {
                 executor.submit(new Runnable() {
                     public void run() {
                         String href = link.attr("href");
-                        String identifier = getLinkIdentifier(href);
+                        String identifier = getLinkIdentifier(opts.getPage(), href);
                         try {
                             downloadFile(href, opts.getLocation(), identifier);
                         } catch (Exception e) {
@@ -93,7 +93,7 @@ public abstract class BaseCrawler {
         return doc;
     }
 
-    private String getLinkIdentifier(String link) {
+    protected String getLinkIdentifier(String pageURL, String link) {
         String[] parts = link.split("/");
         return parts[parts.length - 1];
     }

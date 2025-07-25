@@ -37,7 +37,7 @@ public class Crawler {
         try (Stream<String> lines = Files.lines(jobFile)) {
             lines.forEach(line -> processURL(line.trim()));
         } catch (Exception e) {
-            System.err.println("error: Failed to process jobs.txt file: " + e.getMessage());
+            System.err.printf("error: Failed to process %s file: %s\n", jobFile, e.getMessage());
             System.exit(1);
         }
     }
