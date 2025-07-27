@@ -12,6 +12,7 @@ public class HDPPCrawler extends BaseCrawler {
         String[] sites = {
                 "alllatinapics.com",
                 "hdpornpics.com",
+                "nastypornpics.com",
         };
 
         for (String site : sites) {
