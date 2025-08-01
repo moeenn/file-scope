@@ -1,4 +1,4 @@
-package com.crawler;
+package com.scope;
 
 public class ProgressReporter {
     private int total = 0;

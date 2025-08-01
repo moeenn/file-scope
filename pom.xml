@@ -2,8 +2,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.crawler.Crawler</groupId>
-  <artifactId>crawler</artifactId>
+  <groupId>com.scope.Scope</groupId>
+  <artifactId>scope</artifactId>
   <version>1.0</version>
 
   <build>
@@ -26,11 +26,13 @@
 
   <properties>
     <java.version>21</java.version>
-    <mainClass>com.crawler.Crawler</mainClass>
+    <mainClass>com.scope.Scope</mainClass>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.release>${java.version}</maven.compiler.release>
-    <exec.mainClass>${mainClass}</exec.mainClass>
+    <exec.mainClass>com.scope.Scope</exec.mainClass>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>    
   </properties>
 
   <dependencies>

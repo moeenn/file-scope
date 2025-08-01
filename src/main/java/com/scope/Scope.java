@@ -1,16 +1,15 @@
-package com.crawler;
+package com.scope;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.stream.Stream;
+import com.scope.crawlers.BaseCrawler;
+import com.scope.crawlers.CrawlerOne;
+import com.scope.crawlers.CrawlerTwo;
 
-import com.crawler.crawlers.BaseCrawler;
-import com.crawler.crawlers.CrawlerOne;
-import com.crawler.crawlers.CrawlerTwo;
-
-public class Crawler {
+public class Scope {
     private static BaseCrawler crawlers[] = {
             new CrawlerOne(),
             new CrawlerTwo(),
@@ -18,7 +17,7 @@ public class Crawler {
 
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.out.println("Usage: crawler.jar <url | file-path.txt>");
+            System.out.println("Usage: scope.jar <url | file-path.txt>");
             System.exit(1);
         }
 

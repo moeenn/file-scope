@@ -1,8 +1,8 @@
-package com.crawler.crawlers;
+package com.scope.crawlers;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import com.crawler.CrawlerOptions;
+import com.scope.CrawlerOptions;
 
 public class CrawlerOne extends BaseCrawler {
     @Override

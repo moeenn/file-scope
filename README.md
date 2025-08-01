@@ -1,4 +1,10 @@
-## Universal crawler
+## File scope
+
+#### Usage
+
+```bash
+$ scope <url | file-path> 
+```
 
 
 #### Commands
@@ -11,5 +17,5 @@ $ mvn install
 $ mvn clean compile assembly:single
 
 # run jar.
-$ jar -jar ./target/crawler-1.0-jar-with-dependencies.jar
+$ jar -jar ./target/scope-1.0-jar-with-dependencies.jar
 ```

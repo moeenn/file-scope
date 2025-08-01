@@ -1,10 +1,10 @@
-package com.crawler.crawlers;
+package com.scope.crawlers;
 
 import java.util.UUID;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import com.crawler.CrawlerOptions;
+import com.scope.CrawlerOptions;
 
 public class CrawlerTwo extends BaseCrawler {
     @Override

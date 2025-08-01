@@ -1,4 +1,4 @@
-package com.crawler;
+package com.scope;
 
 public class CrawlerOptions {
     private String page;
