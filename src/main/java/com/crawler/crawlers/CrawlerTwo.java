@@ -6,13 +6,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import com.crawler.CrawlerOptions;
 
-public class HDPPCrawler extends BaseCrawler {
+public class CrawlerOne extends BaseCrawler {
     @Override
     public boolean matchCrawler(String url) {
         String[] sites = {
-                "alllatinapics.com",
-                "hdpornpics.com",
-                "nastypornpics.com",
+                "domain-one.com",
+                "domain-two.com",
         };
 
         for (String site : sites) {

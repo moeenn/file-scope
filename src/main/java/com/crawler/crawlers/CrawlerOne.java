@@ -4,13 +4,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import com.crawler.CrawlerOptions;
 
-public class MBTBCrawler extends BaseCrawler {
+public class CrawlerOne extends BaseCrawler {
     @Override
     public boolean matchCrawler(String url) {
         String sites[] = {
-                "mybigtitsbabes.com",
-                "epicpornpics.com",
-                "nudegirlsalert.com",
+                "example-domain.com",
         };
 
         for (String site : sites) {

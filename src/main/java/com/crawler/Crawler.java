@@ -7,13 +7,13 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import com.crawler.crawlers.BaseCrawler;
-import com.crawler.crawlers.HDPPCrawler;
-import com.crawler.crawlers.MBTBCrawler;
+import com.crawler.crawlers.CrawlerOne;
+import com.crawler.crawlers.CrawlerTwo;
 
 public class Crawler {
     private static BaseCrawler crawlers[] = {
-            new MBTBCrawler(),
-            new HDPPCrawler(),
+            new CrawlerOne(),
+            new CrawlerTwo(),
     };
 
     public static void main(String[] args) {
