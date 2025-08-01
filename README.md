@@ -1,4 +1,6 @@
 ## File scope
+Bulk-download files from multiple integrated websites.
+
 
 #### Usage
 
