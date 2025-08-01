@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import com.crawler.CrawlerOptions;
 
-public class CrawlerOne extends BaseCrawler {
+public class CrawlerTwo extends BaseCrawler {
     @Override
     public boolean matchCrawler(String url) {
         String[] sites = {
